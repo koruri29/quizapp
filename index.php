@@ -46,16 +46,6 @@ $questions_str2 = implode(', ', $questions[2]);
 <body>
 	<main>
 		<h1>三択クイズ</h1>
-		<section class="dummy">
-			<h2>ダミー問題文</h2>
-			<ul>
-				<li class="notseikai">選択肢１</li>
-				<li class="seikai">選択肢２</li>
-				<li class="notseikai">選択肢３</li>
-			</ul>
-			<div class="answer-correct selected">正解です！</div>
-			<div class="answer-wrong">残念！不正解…</div>
-		</section>
 	</main>
 	<script>
 		'use strict';
