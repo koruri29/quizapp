@@ -13,14 +13,15 @@ while (true) {
 	if ($rec == false) {
 		break;
 	}
+	$rec = sanitize($rec);
 	$quiz = [
-		$rec['question'], 
-		$rec['option1'],
-		$rec['option2'],
-		$rec['option3'],
+		'"' . $rec['question'] . '"', 
+		'"' . $rec['option1'] . '"',
+		'"' . $rec['option2'] . '"',
+		'"' . $rec['option3'] . '"',
 		$rec['answer'],
 	];
-	$quizzes[] = sanitize($quiz);
+	$quizzes[] = $quiz;
 	$i++;
 }
 shuffle($quizzes);
@@ -28,7 +29,10 @@ $questions = [];
 for ($i = 0; $i < 3; $i++) {
 	$questions[] = $quizzes[$i];
 }
-var_dump($questions)
+
+$questions_str0 = implode(', ', $questions[0]);
+$questions_str1 = implode(', ', $questions[1]);
+$questions_str2 = implode(', ', $questions[2]);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -90,8 +94,12 @@ var_dump($questions)
 				main.appendChild(section);
 			}
 		
-			const questions = <?php var_dump($questions); ?>;
-			render(questions)
+			const questions0 = [<?php echo $questions_str0; ?>];
+			const questions1 = [<?php echo $questions_str1; ?>];
+			const questions2 = [<?php echo $questions_str2; ?>];
+			render(questions0);
+			render(questions1);
+			render(questions2);
 		}
 	</script>
 </body>
