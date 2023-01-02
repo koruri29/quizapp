@@ -28,3 +28,21 @@ li {
 .wrong::after {
 	content: ' - 不正解…';
 }
+section {
+	margin: 20px auto;
+	padding: 20px;
+	background-color: #efefef;
+	border-radius: 8px;
+}
+.answer-correct,
+.answer-wrong {
+	text-align: center;
+	font-size: 24px;
+	letter-spacing: 2px;
+}
+.answer-correct {
+	color: green;
+}
+.answer-wrong {
+	color: red;
+}
