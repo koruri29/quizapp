@@ -1,6 +1,10 @@
 <?php
 try
 {
+	
+	require __DIR__ . '/vendor/autoload.php';
+	$dotenv = Dotenv\Dotenv::createImmutable(__DIR__)->load();
+
 	$dsn = $_ENV['DSN'];
 	$user = $_ENV['USER'];
 	$password = $_ENV['PASSWORD'];
