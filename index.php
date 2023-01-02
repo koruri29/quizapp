@@ -28,10 +28,7 @@ $questions = [];
 for ($i = 0; $i < 3; $i++) {
 	$questions[] = $quizzes[$i];
 }
-
-$questions = json_encode($questions);
-header("Content-Type: text/javascript; charset=utf-8");
-echo $questions
+var_dump($questions)
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -46,8 +43,56 @@ echo $questions
 	<main>
 		<h1>三択クイズ</h1>
 	</main>
-
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-	<script src="main.php"></script>
+	<script>
+		'use strict';
+		{
+			function render(quiz) {
+				const main = document.querySelector('main');
+				const section = document.createElement('section');
+				const h2 = document.createElement('h2');
+				const ul = document.createElement('ul');
+				const li0 = document.createElement('li');
+				const li1 = document.createElement('li');
+				const li2 = document.createElement('li');
+				
+				h2.textContent = quiz[0];
+				li0.textContent = quiz[1];
+				li1.textContent = quiz[2];
+				li2.textContent = quiz[3];
+		
+				li0.addEventListener('click', () => {
+					if (quiz[4] == 0) {
+						li0.classList.add('correct');
+					} else {
+						li0.classList.add('wrong');
+					}
+				});
+				li1.addEventListener('click', () => {
+					if (quiz[4] == 1) {
+						li1.classList.add('correct');
+					} else {
+						li1.classList.add('wrong');
+					}
+				});
+				li2.addEventListener('click', () => {
+					if (quiz[4] == 2) {
+						li2.classList.add('correct');
+					} else {
+						li2.classList.add('wrong');
+					}
+				});
+		
+				ul.appendChild(li0);
+				ul.appendChild(li1);
+				ul.appendChild(li2);
+				section.appendChild(h2);
+				section.appendChild(ul);
+				main.appendChild(section);
+			}
+		
+			const questions = <?php var_dump($questions); ?>;
+			render(questions)
+		}
+	</script>
 </body>
 </html>
