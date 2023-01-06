@@ -46,12 +46,14 @@ $questions_str2 = implode(', ', $questions[2]);
 <body>
 	<main>
 		<h1>三択クイズ</h1>
-		<div class="result"></div>
+		<ul id="ul"></ul>
 	</main>
 	<script type="text/javascript">
-	const questions0 = [<?php echo $questions_str0; ?>];
-	const questions1 = [<?php echo $questions_str1; ?>];
-	const questions2 = [<?php echo $questions_str2; ?>];
+	const questions = [
+		[<?php echo $questions_str0; ?>],
+		[<?php echo $questions_str1; ?>],
+		[<?php echo $questions_str2; ?>],
+	]
 	</script>
 	<script type="text/javascript" src="main.js"></script>
 </body>
