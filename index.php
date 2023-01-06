@@ -47,81 +47,11 @@ $questions_str2 = implode(', ', $questions[2]);
 	<main>
 		<h1>三択クイズ</h1>
 	</main>
-	<script>
-		'use strict';
-		{
-			function render(quiz) {
-				const main = document.querySelector('main');
-				const section = document.createElement('section');
-				const h2 = document.createElement('h2');
-				const ul = document.createElement('ul');
-				const li0 = document.createElement('li');
-				const li1 = document.createElement('li');
-				const li2 = document.createElement('li');
-				const divAnswer = document.createElement('div');
-
-				function createAnswer(answer) {
-					if (answer) {
-						divAnswer.textContent = "正解です！";
-						divAnswer.className = 'answer-correct';
-					} else {
-						divAnswer.textContent = "残念！不正解…";
-						divAnswer.className = 'answer-wrong';
-					}
-					return divAnswer;
-				}
-				
-				h2.textContent = quiz[0];
-				li0.textContent = quiz[1];
-				li1.textContent = quiz[2];
-				li2.textContent = quiz[3];
-		
-				if (quiz[4] == 0) {
-					ul.addEventListener('click', e => {
-						if (e.target == li0) {
-							createAnswer(true);
-						} else {
-							createAnswer(false);
-						}
-					}, {once: true});
-				}
-
-				if (quiz[4] == 1) {
-					ul.addEventListener('click', e => {
-						if (e.target == li1) {
-							createAnswer(true);
-						} else {
-							createAnswer(false);
-						}
-					}, {once: true});
-				}
-
-				if (quiz[4] == 2) {
-					ul.addEventListener('click', e => {
-						if (e.target == li2) {
-							createAnswer(true);
-						} else {
-							createAnswer(false);
-						}
-					}, {once: true});
-				}
-		
-				ul.appendChild(li0);
-				ul.appendChild(li1);
-				ul.appendChild(li2);
-				section.appendChild(h2);
-				section.appendChild(ul);
-				section.appendChild(divAnswer);
-				main.appendChild(section);
-			}
-		
-			const questions0 = [<?php echo $questions_str0; ?>];
-			const questions1 = [<?php echo $questions_str1; ?>];
-			const questions2 = [<?php echo $questions_str2; ?>];
-			render(questions0);
-			render(questions1);
-			render(questions2);
-		}
+	<script type="text/javascript">
+	const questions0 = [<?php echo $questions_str0; ?>];
+	const questions1 = [<?php echo $questions_str1; ?>];
+	const questions2 = [<?php echo $questions_str2; ?>];
 	</script>
+	<script type="text/javascript" src="main.js"></script>
 </body>
 </html>
