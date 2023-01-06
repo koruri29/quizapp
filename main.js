@@ -49,6 +49,9 @@
 					answerCounter++;
 				}
 				console.log(answerCounter);
+				if (answerCounter >= 3) {
+					renderResult();
+				}
 			}, {once: true});
 		}
 
@@ -63,6 +66,9 @@
 					answerCounter++;
 				}
 				console.log(answerCounter);
+				if (answerCounter >= 3) {
+					renderResult();
+				}
 			}, {once: true});
 		}
 
@@ -77,6 +83,9 @@
 					answerCounter++;
 				}
 				console.log(answerCounter);
+				if (answerCounter >= 3) {
+					renderResult();
+				}
 			}, {once: true});
 		}
 
@@ -99,6 +108,7 @@
 
 	//カウンター(回答数と正解数)
 	const ul = document.querySelector('ul');
+	console.log(ul);
 	ul.addEventListener('click', () => {
 		if (answerCounter >= 3) {
 			renderResult();
