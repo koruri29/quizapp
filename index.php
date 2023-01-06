@@ -46,6 +46,7 @@ $questions_str2 = implode(', ', $questions[2]);
 <body>
 	<main>
 		<h1>三択クイズ</h1>
+		<div class="result"></div>
 	</main>
 	<script type="text/javascript">
 	const questions0 = [<?php echo $questions_str0; ?>];
