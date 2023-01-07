@@ -62,7 +62,7 @@
 
 		if (quizArray[4] == 2) {
 			ul.addEventListener('click', e => {
-				if (e.target == li0) {
+				if (e.target == li2) {
 					createAnswer(true);
 					correctCounter++;
 				} else {
@@ -120,8 +120,6 @@
 		}
 		divResult.textContent = result;
 		document.querySelectorAll('section').lastChild.appendChild(divResult);
-		
-		return console.log(divResult);
 	}
 
 
