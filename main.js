@@ -37,9 +37,11 @@
 
 
 		//正解or不正解を判断、上のCSSを付与する関数を適用
-		//正解時は正解数カウンターを回す
-		if (quizArray[4] == 0) {
+		//正解時は正解数カウンターを回すconcat使う？
+		if (quizArray[4] === 0) {
 			ul.addEventListener('click', e => {
+				answerCounter++;
+				console.log(answerCounter);
 				if (e.target == li0) {
 					createAnswer(true);
 					correctCounter++;
@@ -49,8 +51,10 @@
 			}, {once: true});
 		}
 
-		if (quizArray[4] == 1) {
+		if (quizArray[4] === 1) {
 			ul.addEventListener('click', e => {
+				answerCounter++;
+				console.log(answerCounter);
 				if (e.target == li1) {
 					createAnswer(true);
 					correctCounter++;
@@ -60,8 +64,10 @@
 			}, {once: true});
 		}
 
-		if (quizArray[4] == 2) {
+		if (quizArray[4] === 2) {
 			ul.addEventListener('click', e => {
+				answerCounter++;
+				console.log(answerCounter);
 				if (e.target == li2) {
 					createAnswer(true);
 					correctCounter++;
@@ -94,6 +100,7 @@
 	for (let i = 0; i < 3; i++) {
 		ul.item(i).addEventListener('click', () => {
 			answerCounter++;
+			console.log(answerCounter);
 			if (answerCounter >= 3) {
 				renderResult();
 			}
@@ -122,5 +129,8 @@
 		document.querySelectorAll('section').lastChild.appendChild(divResult);
 	}
 
-
+	//２０２２．１．７メモ
+	//renderResult()をliのaddEventListenerにつけたら動きそうなもんだけど…
+	//やってみても動かないんだなこれが
+	//そもそも上記スコープ内のconsole.logも効いてない感じ
 }
