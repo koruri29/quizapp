@@ -4,107 +4,19 @@
 	let answerCounter = 0;
 	let correctCounter = 0;
 
-	//クイズを生成する関数
-	function render(quizArray) {
-		const main = document.querySelector('main');
-		const section = document.createElement('section');
-		const ul = document.createElement('ul');
-		const h2 = document.createElement('h2');
-		const li0 = document.createElement('li');
-		const li1 = document.createElement('li');
-		const li2 = document.createElement('li');
-		const divAnswer = document.createElement('div');
 
-
-		//回答時にクラスを付与し、CSSをつける用の関数
-		function createAnswer(bool) {
-			if (bool) {
-				divAnswer.textContent = "正解です！";
-				divAnswer.className = 'answer-correct';
-			} else {
-				divAnswer.textContent = "残念！不正解…";
-				divAnswer.className = 'answer-wrong';
-			}
-			return divAnswer;
+	//回答時にクラスを付与し、CSSをつける用の関数
+	function createAnswer(isCorrect) {
+		const section = document.querySelectorAll('section')
+		const divAnswer = document.createElement('div')
+		if (isCorrect) {
+			divAnswer.textContent = "正解です！";
+			divAnswer.className = 'answer-correct';
+		} else {
+			divAnswer.textContent = "残念！不正解…";
+			divAnswer.className = 'answer-wrong';
 		}
-		
-		
-		//問題文と選択肢の文字列を代入
-		h2.textContent = quizArray[0];
-		li0.textContent = quizArray[1];
-		li1.textContent = quizArray[2];
-		li2.textContent = quizArray[3];
-
-
-		//正解or不正解を判断、上のCSSを付与する関数を適用
-		//正解時は正解数カウンターを回すconcat使う？
-		if (quizArray[4] === 0) {
-			ul.addEventListener('click', e => {
-				answerCounter++;
-				console.log(answerCounter);
-				if (e.target == li0) {
-					createAnswer(true);
-					correctCounter++;
-				} else {
-					createAnswer(false);
-				}
-			}, {once: true});
-		}
-
-		if (quizArray[4] === 1) {
-			ul.addEventListener('click', e => {
-				answerCounter++;
-				console.log(answerCounter);
-				if (e.target == li1) {
-					createAnswer(true);
-					correctCounter++;
-				} else {
-					createAnswer(false);
-				}
-			}, {once: true});
-		}
-
-		if (quizArray[4] === 2) {
-			ul.addEventListener('click', e => {
-				answerCounter++;
-				console.log(answerCounter);
-				if (e.target == li2) {
-					createAnswer(true);
-					correctCounter++;
-				} else {
-					createAnswer(false);
-				}
-			}, {once: true});
-		}
-
-
-		ul.appendChild(li0);
-		ul.appendChild(li1);
-		ul.appendChild(li2);
-		section.appendChild(h2);
-		section.appendChild(ul);
-		section.appendChild(divAnswer);
-		main.appendChild(section);
-	}
-
-	
-	//クイズデータを代入、クイズ生成
-	for (let i = 0; i < 3; i++){
-		const question = questions[i];
-		render(question);
-	}
-
-
-	//カウンター(回答数と正解数)
-	const ul = document.querySelectorAll('ul');
-	for (let i = 0; i < 3; i++) {
-		ul.item(i).addEventListener('click', () => {
-			answerCounter++;
-			console.log(answerCounter);
-			if (answerCounter >= 3) {
-				renderResult();
-			}
-		});
+		section.lastChild.appendChild(divAnswer);
 	}
 
 
@@ -128,6 +40,130 @@
 		divResult.textContent = result;
 		document.querySelectorAll('section').lastChild.appendChild(divResult);
 	}
+
+
+	//クイズを生成する関数
+	function renderQuiz(quizArray, optionNum) {
+
+		//elem宣言ブロック
+		const main = document.querySelector('main');
+		const section = document.createElement('section');
+		const h2 = document.createElement('h2');
+		const ul = document.createElement('ul');
+		let li = [];
+		for (let i = 0; i < optionNum; i++) {
+			li.push(document.createElement('li'));
+		}
+
+		main.appendChild(section);
+		section.appendChild(h2);
+		section.appendChild(ul);
+		for (let i = 0; i < optionNum; i++) {
+			ul.appendChild(li[i]);
+		}
+		
+
+		//問題文と選択肢の文字列を代入
+		h2.textContent = quizArray[0];
+		for (let i = 0; i < optionNum; i++) {
+			li[i].textContent = quizArray[i + 1];
+		}
+	
+		//正解がi番目のとき、i番目の選択肢をクリックしたら正解
+		//回答時に上のCSSを付与する関数を実行
+		//正解時はさらにカウンター回す
+		for (let i = 0; i < 3; i++) {
+			if (answerNum === i) {
+				ul.addEventListener('click', e => {
+					answerCounter++;
+					console.log(answerCounter);
+					if (e.target == li[i]) {
+						createAnswer(true);
+						correctCounter++;
+					} else {
+						createAnswer(false);
+					}
+				}, {once: true});
+			}
+		}
+
+
+		//選択肢と回答の生成
+		for (let i = 0; i < 3; i++){
+			renderOptions(3, quizArray[4]);
+		}
+
+
+		//回答数カウンター
+		ul.addEventListener('click', () => {
+			answerCounter++;
+			console.log(answerCounter);
+			if (answerCounter >= 3) {
+				renderResult();
+			}
+		}, {once: true});
+
+
+		// if (quizArray[4] === 0) {
+		// 	ul.addEventListener('click', e => {
+		// 		answerCounter++;
+		// 		console.log(answerCounter);
+		// 		if (e.target == li0) {
+		// 			createAnswer(true);
+		// 			correctCounter++;
+		// 		} else {
+		// 			createAnswer(false);
+		// 		}
+		// 	}, {once: true});
+		// }
+
+		// if (quizArray[4] === 1) {
+		// 	ul.addEventListener('click', e => {
+		// 		answerCounter++;
+		// 		console.log(answerCounter);
+		// 		if (e.target == li1) {
+		// 			createAnswer(true);
+		// 			correctCounter++;
+		// 		} else {
+		// 			createAnswer(false);
+		// 		}
+		// 	}, {once: true});
+		// }
+
+		// if (quizArray[4] === 2) {
+		// 	ul.addEventListener('click', e => {
+		// 		answerCounter++;
+		// 		console.log(answerCounter);
+		// 		if (e.target == li2) {
+		// 			createAnswer(true);
+		// 			correctCounter++;
+		// 		} else {
+		// 			createAnswer(false);
+		// 		}
+		// 	}, {once: true});
+		// }
+	}
+
+	
+	//クイズデータを代入、クイズ生成
+	for (let i = 0; i < 3; i++){
+		const question = questions[i];
+		renderQuiz(question, 3);
+	}
+
+
+	//回答数カウンター
+	// const ul = document.querySelectorAll('ul');
+	// for (let i = 0; i < 3; i++) {
+	// 	ul.item(i).addEventListener('click', () => {
+	// 		answerCounter++;
+	// 		console.log(answerCounter);
+	// 		if (answerCounter >= 3) {
+	// 			renderResult();
+	// 		}
+	// 	});
+	// }
+
 
 	//２０２２．１．７メモ
 	//renderResult()をliのaddEventListenerにつけたら動きそうなもんだけど…
