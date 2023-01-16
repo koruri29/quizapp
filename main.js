@@ -1,4 +1,4 @@
-// 'use strict';
+'use strict';
 {
 	//カウンター準備
 	let answerCounter = 0;
@@ -64,7 +64,6 @@
 					if (answerCounter >= 3) {
 						renderResult();
 					}
-					console.log(answerCounter);
 				}, {once: true});
 			}
 		}
@@ -99,23 +98,4 @@
 		const question = questions[i];
 		renderQuiz(question, 3);
 	}
-
-
-	//回答数カウンター
-	// const ul = document.querySelectorAll('ul');
-	// for (let i = 0; i < 3; i++) {
-	// 	ul.item(i).addEventListener('click', () => {
-	// 		answerCounter++;
-	// 		console.log(answerCounter);
-	// 		if (answerCounter >= 3) {
-	// 			renderResult();
-	// 		}
-	// 	});
-	// }
-
-
-	//２０２２．１．７メモ
-	//renderResult()をliのaddEventListenerにつけたら動きそうなもんだけど…
-	//やってみても動かないんだなこれが
-	//そもそも上記スコープ内のconsole.logも効いてない感じ
 }
