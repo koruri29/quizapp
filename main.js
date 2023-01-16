@@ -70,69 +70,14 @@
 		}
 
 
-		//選択肢と回答の生成
-		// for (let i = 0; i < 3; i++){
-		// 	renderOptions(3, quizArray[4]);
-		// }
-
-
-		//回答数カウンター
-		// ul.addEventListener('click', () => {
-		// 	answerCounter++;
-		// 	console.log(answerCounter);
-		// 	if (answerCounter >= 3) {
-		// 		renderResult();
-		// 	}
-		// }, {once: true});
-
-
-		// if (quizArray[4] === 0) {
-		// 	ul.addEventListener('click', e => {
-		// 		answerCounter++;
-		// 		console.log(answerCounter);
-		// 		if (e.target == li0) {
-		// 			createAnswer(true);
-		// 			correctCounter++;
-		// 		} else {
-		// 			createAnswer(false);
-		// 		}
-		// 	}, {once: true});
-		// }
-
-		// if (quizArray[4] === 1) {
-		// 	ul.addEventListener('click', e => {
-		// 		answerCounter++;
-		// 		console.log(answerCounter);
-		// 		if (e.target == li1) {
-		// 			createAnswer(true);
-		// 			correctCounter++;
-		// 		} else {
-		// 			createAnswer(false);
-		// 		}
-		// 	}, {once: true});
-		// }
-
-		// if (quizArray[4] === 2) {
-		// 	ul.addEventListener('click', e => {
-		// 		answerCounter++;
-		// 		console.log(answerCounter);
-		// 		if (e.target == li2) {
-		// 			createAnswer(true);
-		// 			correctCounter++;
-		// 		} else {
-		// 			createAnswer(false);
-		// 		}
-		// 	}, {once: true});
-		// }
-
 			//最後に正解数を表示する関数
 		function renderResult() {
-			const divResult = document.createElement('section');
+			const divResult = document.createElement('div');
 			let result = '';
 	
 			result = `
-				<p>あなたの正解数は…<br>
-				3問中　<span class="strong">${correctCounter}問</span>です。<br>
+				<p class="result">あなたの正解数は…<br>
+				3問中　${correctCounter}問です。<br>
 			`;
 	
 			if (correctCounter === 3) {
@@ -144,7 +89,7 @@
 			}
 			result += '</p>';
 			divResult.innerHTML = result;
-			section.lastChild.after(divResult);
+			section.parentNode.after(divResult);
 		}
 	}
 

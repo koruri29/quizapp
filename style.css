@@ -16,18 +16,6 @@ h2 {
 li {
 	cursor: pointer;
 }
-.correct {
-	color: green;
-}
-.correct::after {
-	content: ' - 正解！';
-}
-.wrong {
-	color: red;
-}
-.wrong::after {
-	content: ' - 不正解…';
-}
 section {
 	margin: 20px auto;
 	padding: 20px;
@@ -41,8 +29,14 @@ section {
 	letter-spacing: 2px;
 }
 .answer-correct {
+	margin-right: 20px;
 	color: green;
 }
 .answer-wrong {
+	margin-right: 20px;
 	color: red;
+}
+.result {
+	text-align: center;
+	font-size: 28px;
 }
