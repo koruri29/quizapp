@@ -5,43 +5,6 @@
 	let correctCounter = 0;
 
 
-	//回答時にクラスを付与し、CSSをつける用の関数
-	function createAnswer(isCorrect) {
-		const section = document.querySelectorAll('section')
-		const divAnswer = document.createElement('div')
-		if (isCorrect) {
-			divAnswer.textContent = "正解です！";
-			divAnswer.className = 'answer-correct';
-		} else {
-			divAnswer.textContent = "残念！不正解…";
-			divAnswer.className = 'answer-wrong';
-		}
-		section.lastChild.appendChild(divAnswer);
-	}
-
-
-	//最後に正解数を表示する関数
-	function renderResult() {
-		const divResult = document.createElement('div');
-		let result = '';
-
-		result = `
-			あなたの正解数は…
-			3問中　<span class="strong">${correctCounter}問</span>です。<br>
-		`;
-
-		if (correctCounter === 3) {
-			result += 'お見事、クイズ王です！';
-		} else if (correctCounter === 2) {
-			result += 'おしい、あと一歩！';
-		} else {
-			result += '残念、次はがんばろう。'
-		}
-		divResult.textContent = result;
-		document.querySelectorAll('section').lastChild.appendChild(divResult);
-	}
-
-
 	//クイズを生成する関数
 	function renderQuiz(quizArray, optionNum) {
 
@@ -69,39 +32,58 @@
 			li[i].textContent = quizArray[i + 1];
 		}
 	
+
+		//回答時にクラスを付与し、CSSをつける用の関数
+		function createAnswer(isCorrect) {
+			const divAnswer = document.createElement('div')
+			if (isCorrect) {
+				divAnswer.textContent = "正解です！";
+				divAnswer.className = 'answer-correct';
+			} else {
+				divAnswer.textContent = "残念！不正解…";
+				divAnswer.className = 'answer-wrong';
+			}
+			section.lastChild.appendChild(divAnswer);
+		}
+
+
 		//正解がi番目のとき、i番目の選択肢をクリックしたら正解
 		//回答時に上のCSSを付与する関数を実行
 		//正解時はさらにカウンター回す
 		for (let i = 0; i < 3; i++) {
-			if (answerNum === i) {
+			if (quizArray[optionNum + 1] === i) {
 				ul.addEventListener('click', e => {
 					answerCounter++;
-					console.log(answerCounter);
-					if (e.target == li[i]) {
+					if (e.target === li[i]) {
 						createAnswer(true);
 						correctCounter++;
 					} else {
 						createAnswer(false);
 					}
+					
+					if (answerCounter >= 3) {
+						renderResult();
+					}
+					console.log(answerCounter);
 				}, {once: true});
 			}
 		}
 
 
 		//選択肢と回答の生成
-		for (let i = 0; i < 3; i++){
-			renderOptions(3, quizArray[4]);
-		}
+		// for (let i = 0; i < 3; i++){
+		// 	renderOptions(3, quizArray[4]);
+		// }
 
 
 		//回答数カウンター
-		ul.addEventListener('click', () => {
-			answerCounter++;
-			console.log(answerCounter);
-			if (answerCounter >= 3) {
-				renderResult();
-			}
-		}, {once: true});
+		// ul.addEventListener('click', () => {
+		// 	answerCounter++;
+		// 	console.log(answerCounter);
+		// 	if (answerCounter >= 3) {
+		// 		renderResult();
+		// 	}
+		// }, {once: true});
 
 
 		// if (quizArray[4] === 0) {
@@ -142,6 +124,28 @@
 		// 		}
 		// 	}, {once: true});
 		// }
+
+			//最後に正解数を表示する関数
+		function renderResult() {
+			const divResult = document.createElement('section');
+			let result = '';
+	
+			result = `
+				<p>あなたの正解数は…<br>
+				3問中　<span class="strong">${correctCounter}問</span>です。<br>
+			`;
+	
+			if (correctCounter === 3) {
+				result += 'お見事、クイズ王です！';
+			} else if (correctCounter === 2) {
+				result += 'おしい、あと一歩！';
+			} else {
+				result += '残念、次はがんばろう。'
+			}
+			result += '</p>';
+			divResult.innerHTML = result;
+			section.lastChild.after(divResult);
+		}
 	}
 
 	
