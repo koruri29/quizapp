@@ -2,17 +2,38 @@
 require('dbconnect.php');
 require_once('common.php');
 
-$sql = 'SELECT * FROM quiz WHERE 1';
+//quizテーブルからIDを抽出し、シャッフルしたIDで問題データを取り出す
+//ID取り出し
+$sql = 'SELECT id FROM quiz WHERE 1 = 1;';
 $stmt = $db->prepare($sql);
 $stmt->execute();
 
+$id = [];
+while ($rec = $stmt->fetch(PDO::FETCH_ASSOC)) {
+	$id[] = $rec['id'];
+}
+shuffle($id);
+
+//クイズデータ取り出し
+$number_of_questions = 3;
+$arr = [];
+$arr[] = 'SELECT * FROM quiz WHERE id = ';
+for ($i = 0; $i < $number_of_questions; $i++) {
+	$arr[] = '?';
+	$arr[] = ' OR id = ';
+}
+$arr[$number_of_questions * 2] = '';//最後のORを削除
+$sql = implode('', $arr);
+
+$stmt = $db->prepare($sql);
+for ($i = 1; $i <= $number_of_questions; $i++) {
+	$stmt->bindValue($i, $id[$i]);
+}
+$stmt->execute();
+
+//クイズデータを成形し配列に格納
 $quizzes = [];
-$i = 0;
-while (true) {
-	$rec = $stmt->fetch(PDO::FETCH_ASSOC);
-	if ($rec == false) {
-		break;
-	}
+while ($rec = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	$rec = sanitize($rec);
 	$quiz = [
 		'"' . $rec['question'] . '"', 
@@ -22,17 +43,13 @@ while (true) {
 		$rec['answer'],
 	];
 	$quizzes[] = $quiz;
-	$i++;
 }
 shuffle($quizzes);
+
 $questions = [];
 for ($i = 0; $i < 3; $i++) {
-	$questions[] = $quizzes[$i];
+	$questions[] = implode(', ', $quizzes[$i]);
 }
-
-$questions_str0 = implode(', ', $questions[0]);
-$questions_str1 = implode(', ', $questions[1]);
-$questions_str2 = implode(', ', $questions[2]);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -50,9 +67,13 @@ $questions_str2 = implode(', ', $questions[2]);
 	</main>
 	<script type="text/javascript">
 	const questions = [
-		[<?php echo $questions_str0; ?>],
-		[<?php echo $questions_str1; ?>],
-		[<?php echo $questions_str2; ?>],
+		<?php 
+			for ($i = 0; $i < $number_of_questions; $i++) {
+				print '[';
+				print $questions[$i];
+				print '],';
+			}
+		?>
 	]
 	</script>
 	<script type="text/javascript" src="main.js"></script>
