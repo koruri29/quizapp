@@ -47,7 +47,7 @@ while ($rec = $stmt->fetch(PDO::FETCH_ASSOC)) {
 shuffle($quizzes);
 
 $questions = [];
-for ($i = 0; $i < 3; $i++) {
+for ($i = 0; $i < $number_of_questions; $i++) {
 	$questions[] = implode(', ', $quizzes[$i]);
 }
 ?>
