@@ -69,9 +69,7 @@ for ($i = 0; $i < $number_of_questions; $i++) {
 	const questions = [
 		<?php 
 			for ($i = 0; $i < $number_of_questions; $i++) {
-				print '[';
-				print $questions[$i];
-				print '],';
+				print '[' . $questions[$i] . '],';
 			}
 		?>
 	]
